@@ -1,5 +1,7 @@
+import Link from 'next/link';
 import {
-    handlePlaylistDeletion
+    handlePlaylistDeletion,
+    removeSongFromPlaylist
 } from '../controllers/playlists';
 
 const Playlist = ({ playlist }) => {
@@ -9,7 +11,7 @@ const Playlist = ({ playlist }) => {
         <div className="playlist">
             <div className="listing__title">
                 <h2>
-                    { name }
+                    <Link href={ `/?playlist=${id}` }><a>{ name }</a></Link>
                     {/* This is hot delete and needs to be changed, but I will get to that if I have time */}
                     <button onClick={ () => handlePlaylistDeletion(id) }>
                         Delete
@@ -19,6 +21,9 @@ const Playlist = ({ playlist }) => {
                     { songs.map(song => (
                         <div key={ `${id}-${song.id}` } className="listing__title">
                             { song.title }
+                            <button onClick={ () => removeSongFromPlaylist({ song, playlist }) }>
+                                Delete
+                            </button>
                         </div>
                     )) }
                 </div>

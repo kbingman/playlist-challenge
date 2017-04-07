@@ -1,12 +1,19 @@
-const Song = ({ song }) => {
+import { addSongToPlaylist } from '../controllers/playlists';
+
+const Song = ({ song, playlist }) => {
     const { album, artist, id, title } = song;
+
+    let button;
+    if (playlist) {
+        button = <button onClick={ () => addSongToPlaylist({ song, playlist }) }>Add</button>;
+    }
 
     return (
         <li className="listing">
             {/* <div className="listing__artist">{ artist }</div>
             <div className="listing__album">{ album }</div> */}
             <div className="listing__title">
-                <button onClick={ () => console.log(id) }>Add</button>
+                { button }
                 { title }
             </div>
             <style jsx>{`

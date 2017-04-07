@@ -2,7 +2,7 @@ import { Component } from 'react';
 import Head from 'next/head';
 
 import Song from '../src/components/song';
-import Playlist from '../src/components/playlist';
+import Playlists from '../src/components/playlists';
 import PlaylistForm from '../src/components/playlist-form';
 
 import { getAllSongs } from '../src/controllers/songs';
@@ -10,13 +10,15 @@ import { getAllPlaylists } from '../src/controllers/playlists';
 
 export default class IndexPage extends Component {
 
-    static async getInitialProps () {
+    static async getInitialProps ({ query }) {
         const songs = await getAllSongs();
         const playlists = await getAllPlaylists(songs);
+        const playlist = playlists.find(p => p.id === parseInt(query.playlist));
 
         return {
             songs,
-            playlists
+            playlists,
+            playlist
         };
     }
 
@@ -25,7 +27,7 @@ export default class IndexPage extends Component {
     }
 
     render () {
-        const { songs, playlists } = this.props;
+        const { songs, playlists, playlist } = this.props;
 
         return (
             <div className="container">
@@ -41,16 +43,11 @@ export default class IndexPage extends Component {
                 <h1>Ryan's Awesome Library</h1>
                 <div className="library">
                     <div className="library__listing library__listing--playlists">
-                        <PlaylistForm />
-                        <div className="playlists__wrapper">
-                            { playlists.map(playlist => (
-                                <Playlist key={ playlist.id } playlist={ playlist } songs={ songs }/>
-                            )) }
-                        </div>
+                        <Playlists playlists={ playlists } playlist={ playlist } />
                     </div>
                     <div className="library__listing library__listing--songs">
                         { songs.map(song => (
-                            <Song key={ song.id } song={ song } />
+                            <Song key={ song.id } song={ song } playlist={ playlist } />
                         )) }
                     </div>
                 </div>
