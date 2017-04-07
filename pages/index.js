@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 
 import Song from '../src/components/song';
 import Playlists from '../src/components/playlists';
@@ -23,12 +24,13 @@ export default class IndexPage extends Component {
         };
     }
 
-    componetDidMount () {
-        console.log('mounted');
-    }
-
     render () {
         const { playlists, playlist, artists } = this.props;
+
+        const title = 'Ryan\'s Awesome Library';
+        const headline = playlist
+            ? <Link href="/"><a>{ title }</a></Link>
+            : title;
 
         return (
             <div className="container">
@@ -41,7 +43,7 @@ export default class IndexPage extends Component {
 
                     <link rel="stylesheet" href="/static/css/bootstrap.css" />
                 </Head>
-                <h1>Ryan's Awesome Library</h1>
+                <h1>{ headline }</h1>
                 <div className="library">
                     <div className="library__listing library__listing--playlists">
                         <Playlists playlists={ playlists } playlist={ playlist } />
