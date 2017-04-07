@@ -3,6 +3,8 @@ import {
 } from '../controllers/playlists';
 
 const PlaylistSong = ({ song, playlist, editable }) => {
+
+    // This is hot delete and needs to be changed, but I will get to that if I have time
     let deleteButton;
     if (editable) {
         deleteButton= (
@@ -13,7 +15,7 @@ const PlaylistSong = ({ song, playlist, editable }) => {
     }
 
     return (
-        <div key={ `${playlist.id}-${song.id}` } className="listing__title">
+        <div className="listing__title">
             { song.title }
             { deleteButton }
         </div>

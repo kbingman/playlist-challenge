@@ -13,7 +13,7 @@ const Playlists = ({ playlists, playlist }) => {
         <div className="playlists__wrapper">
             <PlaylistForm />
             { playlists.map(p => (
-                <Playlist key={ p.id } playlist={ p }  />
+                <Playlist key={ p.id } playlist={ p } deletable={ true } />
             )) }
         </div>
     );

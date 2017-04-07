@@ -35,7 +35,6 @@ export const handlePlaylistCreation = async (e) => {
     const playlist = await createPlaylist({ name });
 
     Router.push(`/?playlist=${playlist.id}`);
-    field.value = '';
 };
 
 export const handlePlaylistDeletion = async (id) => {
