@@ -2,16 +2,20 @@ import { Component } from 'react';
 import Head from 'next/head';
 
 import Song from '../src/components/song';
+import Playlist from '../src/components/playlist';
 
-import { getAllSongs } from '../src/songs';
+import { getAllSongs } from '../src/controllers/songs';
+import { getAllPlaylists } from '../src/controllers/playlists';
 
 export default class IndexPage extends Component {
 
     static async getInitialProps () {
         const songs = await getAllSongs();
+        const playlists = await getAllPlaylists();
 
         return {
-            songs
+            songs,
+            playlists
         };
     }
 
@@ -20,8 +24,7 @@ export default class IndexPage extends Component {
     }
 
     render () {
-        const { songs } = this.props;
-        console.log(songs.length);
+        const { songs, playlists } = this.props;
 
         return (
             <div className="container">
@@ -36,9 +39,17 @@ export default class IndexPage extends Component {
                     <link rel="stylesheet" href="/static/css/main.css" />
                 </Head>
                 <h1>Ryan's Awesome Library</h1>
-                { songs.map(song => <Song key={ song.id } song={ song } />) }
+                <div>
+                    { playlists.map(playlist => (
+                        <Playlist key={ playlist.id } playlist={ playlist } />
+                    )) }
+                </div>
+                <div>
+                    { songs.map(song => (
+                        <Song key={ song.id } song={ song } />
+                    )) }
+                </div>
             </div>
-
         );
     }
 

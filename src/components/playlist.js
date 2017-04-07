@@ -1,23 +1,23 @@
-const Song = ({ song }) => {
-    const { album, artist, id, title } = song;
+const Playlist = ({ playlist }) => {
+    const { id, name } = playlist;
+    const songIds = playlist.songs;
 
     return (
-        <li className="listing">
+        <div className="playlist">
             {/* <div className="listing__artist">{ artist }</div>
             <div className="listing__album">{ album }</div> */}
             <div className="listing__title">
-                <button onClick={ () => console.log(id) }>Add</button>
-                { title }
+                { name }
             </div>
             <style jsx>{`
-                .listing {
+                .playlist {
                     list-style: none;
                     margin: 0;
                     padding: 0;
                 }
             `}</style>
-        </li>
+        </div>
     );
 };
 
-export default Song;
+export default Playlist;
