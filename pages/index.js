@@ -13,7 +13,7 @@ export default class IndexPage extends Component {
     static async getInitialProps ({ query }) {
         const songs = await getAllSongs();
         const playlists = await getAllPlaylists(songs);
-        const playlist = playlists.find(p => p.id === parseInt(query.playlist));
+        const playlist = playlists.find(p => p.data.id === parseInt(query.playlist));
 
         return {
             songs,

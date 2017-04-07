@@ -5,7 +5,7 @@ const Song = ({ song, playlist }) => {
 
     let button;
     if (playlist) {
-        button = <button onClick={ () => addSongToPlaylist({ song, playlist }) }>Add</button>;
+        button = <button onClick={ () => addSongToPlaylist({ song, playlist: playlist.data }) }>Add</button>;
     }
 
     return (

@@ -7,9 +7,10 @@ export const getAllPlaylists = async (library) => {
     try {
         const { data } = await axios.get(`${BASE_URL}/playlist/`);
         const playlists = data.map(playlist => {
-            return Object.assign({}, playlist, {
+            return {
+                data: playlist,
                 songs: library.filter(s => (playlist.songs || []).indexOf(s.id) > -1)
-            });
+            };
         });
 
         return playlists.reverse();
@@ -48,16 +49,12 @@ export const handlePlaylistDeletion = async (id) => {
 };
 
 export const addSongToPlaylist = async ({ song, playlist }) => {
-    // Because I munged the data above, which probably wasn't a good idea, I have to unmunge it here
-    const params = Object.assign({}, playlist, {
-        songs: playlist.songs.map(s => s.id)
-    });
-    if (params.songs.indexOf(song.id) < 0) {
-        params.songs.push(song.id);
+    if (playlist.songs.indexOf(song.id) < 0) {
+        playlist.songs.push(song.id);
     }
 
     try {
-        const { data } = await axios.post(`${BASE_URL}/playlist/${playlist.id}/`, params);
+        const { data } = await axios.post(`${BASE_URL}/playlist/${playlist.id}/`, playlist);
         Router.push(`/?playlist=${playlist.id}`);
         return data;
     } catch (error) {
@@ -66,17 +63,13 @@ export const addSongToPlaylist = async ({ song, playlist }) => {
 };
 
 export const removeSongFromPlaylist = async ({ song, playlist }) => {
-    // Because I munged the data above, which probably wasn't a good idea, I have to unmunge it here
-    const params = Object.assign({}, playlist, {
-        songs: playlist.songs.map(s => s.id)
-    });
-    const index = params.songs.indexOf(song.id);
+    const index = playlist.songs.indexOf(song.id);
     if (index > -1) {
-        params.songs.splice(index);
+        playlist.songs.splice(index, 1);
     }
 
     try {
-        const { data } = await axios.post(`${BASE_URL}/playlist/${playlist.id}/`, params);
+        const { data } = await axios.post(`${BASE_URL}/playlist/${playlist.id}/`, playlist);
         Router.push(`/?playlist=${playlist.id}`);
         return data;
     } catch (error) {

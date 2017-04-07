@@ -4,8 +4,8 @@ import {
     handlePlaylistDeletion
 } from '../controllers/playlists';
 
-const Playlist = ({ playlist, editable, deletable }) => {
-    const { id, name, songs } = playlist;
+const Playlist = ({ playlist, songs, editable, deletable }) => {
+    const { id, name } = playlist;
     let deleteButton;
     if (deletable) {
         deleteButton = (

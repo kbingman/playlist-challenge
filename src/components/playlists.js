@@ -2,10 +2,11 @@ import Playlist from './playlist';
 import PlaylistForm from './playlist-form';
 
 const Playlists = ({ playlists, playlist }) => {
-
     if (playlist) {
         return (
-            <Playlist playlist={ playlist } editable={ true } />
+            <Playlist playlist={ playlist.data }
+                      songs={ playlist.songs }
+                      editable={ true } />
         );
     }
 
@@ -13,7 +14,10 @@ const Playlists = ({ playlists, playlist }) => {
         <div className="playlists__wrapper">
             <PlaylistForm />
             { playlists.map(p => (
-                <Playlist key={ p.id } playlist={ p } deletable={ true } />
+                <Playlist key={ p.data.id }
+                          playlist={ p.data }
+                          songs={ p.songs }
+                          deletable={ true } />
             )) }
         </div>
     );
