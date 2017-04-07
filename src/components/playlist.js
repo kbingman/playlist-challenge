@@ -1,13 +1,19 @@
+import Song from './song';
+
 const Playlist = ({ playlist }) => {
-    const { id, name } = playlist;
-    const songIds = playlist.songs;
+    const { id, name, songs } = playlist;
 
     return (
         <div className="playlist">
-            {/* <div className="listing__artist">{ artist }</div>
-            <div className="listing__album">{ album }</div> */}
             <div className="listing__title">
-                { name }
+                <h2>{ name }</h2>
+                <div>
+                    { songs.map(song => (
+                        <div key={ `${id}-${song.id}` } className="listing__title">
+                            { song.title }
+                        </div>
+                    )) }
+                </div>
             </div>
             <style jsx>{`
                 .playlist {

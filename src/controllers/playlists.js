@@ -2,11 +2,16 @@ import axios from 'axios';
 
 const BASE_URL = 'http://localhost:5000';
 
-export const getAllPlaylists = async () => {
+export const getAllPlaylists = async (library) => {
     try {
         const { data } = await axios.get(`${BASE_URL}/playlist/`);
+        const playlists = data.map(playlist => {
+            return Object.assign({}, playlist, {
+                songs: library.filter(s => playlist.songs.indexOf(s.id) > -1)
+            });
+        });
 
-        return data;
+        return playlists;
     } catch (error) {
         console.log(error);
     }

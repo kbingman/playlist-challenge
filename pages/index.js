@@ -11,7 +11,7 @@ export default class IndexPage extends Component {
 
     static async getInitialProps () {
         const songs = await getAllSongs();
-        const playlists = await getAllPlaylists();
+        const playlists = await getAllPlaylists(songs);
 
         return {
             songs,
@@ -36,19 +36,33 @@ export default class IndexPage extends Component {
                     <meta name="viewport" content="width=device-width" />
 
                     <link rel="stylesheet" href="/static/css/bootstrap.css" />
-                    <link rel="stylesheet" href="/static/css/main.css" />
                 </Head>
                 <h1>Ryan's Awesome Library</h1>
-                <div>
-                    { playlists.map(playlist => (
-                        <Playlist key={ playlist.id } playlist={ playlist } />
-                    )) }
+                <div className="library">
+                    <div className="library__listing library__listing--playlists">
+                        <button onClick={ () => console.log('hey') }>New Playlist</button>
+                        <div className="playlists__wrapper">
+                            { playlists.map(playlist => (
+                                <Playlist key={ playlist.id } playlist={ playlist } songs={ songs }/>
+                            )) }
+                        </div>
+                    </div>
+                    <div className="library__listing library__listing--songs">
+                        { songs.map(song => (
+                            <Song key={ song.id } song={ song } />
+                        )) }
+                    </div>
                 </div>
-                <div>
-                    { songs.map(song => (
-                        <Song key={ song.id } song={ song } />
-                    )) }
-                </div>
+                <style jsx>{`
+                    .library {
+                        display: flex;
+                        justify-content: space-between;
+                    }
+                    .library :global(.library__listing) {
+                        width: 42%;
+                        padding: 0 4%;
+                    }
+                `}</style>
             </div>
         );
     }
