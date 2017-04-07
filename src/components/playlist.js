@@ -6,20 +6,19 @@ import {
 
 const Playlist = ({ playlist, songs, editable, deletable }) => {
     const { id, name } = playlist;
-    let deleteButton;
-    if (deletable) {
-        deleteButton = (
-            <button onClick={ () => handlePlaylistDeletion(id) }>
-                Delete
-            </button>
-        );
-    }
+
+    const deleteButton = deletable
+        ? <button onClick={ () => handlePlaylistDeletion(id) }>Delete</button>
+        : null;
+    const title = editable
+        ? name
+        : <Link href={ `/?playlist=${id}` }><a>{ name }</a></Link>;
 
     return (
         <div className="playlist">
             <div className="listing__title">
                 <h2>
-                    <Link href={ `/?playlist=${id}` }><a>{ name }</a></Link>
+                    { title }
                     {/* This is hot delete and needs to be changed, but I will get to that if I have time */}
                     { deleteButton }
                 </h2>
