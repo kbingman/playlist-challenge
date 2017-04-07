@@ -5,7 +5,7 @@ const Playlists = ({ playlists, playlist }) => {
 
     if (playlist) {
         return (
-            <Playlist playlist={ playlist } />
+            <Playlist playlist={ playlist } editable={ true } />
         );
     }
 
@@ -13,7 +13,7 @@ const Playlists = ({ playlists, playlist }) => {
         <div className="playlists__wrapper">
             <PlaylistForm />
             { playlists.map(p => (
-                <Playlist key={ p.id } playlist={ p } />
+                <Playlist key={ p.id } playlist={ p }  />
             )) }
         </div>
     );

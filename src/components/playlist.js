@@ -1,10 +1,11 @@
 import Link from 'next/link';
+import PlaylistSong from './playlist-song';
 import {
     handlePlaylistDeletion,
     removeSongFromPlaylist
 } from '../controllers/playlists';
 
-const Playlist = ({ playlist }) => {
+const Playlist = ({ playlist, editable }) => {
     const { id, name, songs } = playlist;
 
     return (
@@ -19,12 +20,7 @@ const Playlist = ({ playlist }) => {
                 </h2>
                 <div>
                     { songs.map(song => (
-                        <div key={ `${id}-${song.id}` } className="listing__title">
-                            { song.title }
-                            <button onClick={ () => removeSongFromPlaylist({ song, playlist }) }>
-                                Delete
-                            </button>
-                        </div>
+                        <PlaylistSong song={ song } playlist={ playlist } editable={ editable } />
                     )) }
                 </div>
             </div>
