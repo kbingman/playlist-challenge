@@ -49,6 +49,7 @@ export const handlePlaylistDeletion = async (id) => {
 };
 
 export const addSongToPlaylist = async ({ song, playlist }) => {
+    playlist.songs = playlist.songs || [];
     if (playlist.songs.indexOf(song.id) < 0) {
         playlist.songs.push(song.id);
     }
