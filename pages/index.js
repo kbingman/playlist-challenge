@@ -3,6 +3,7 @@ import Head from 'next/head';
 
 import Song from '../src/components/song';
 import Playlist from '../src/components/playlist';
+import PlaylistForm from '../src/components/playlist-form';
 
 import { getAllSongs } from '../src/controllers/songs';
 import { getAllPlaylists } from '../src/controllers/playlists';
@@ -40,7 +41,7 @@ export default class IndexPage extends Component {
                 <h1>Ryan's Awesome Library</h1>
                 <div className="library">
                     <div className="library__listing library__listing--playlists">
-                        <button onClick={ () => console.log('hey') }>New Playlist</button>
+                        <PlaylistForm />
                         <div className="playlists__wrapper">
                             { playlists.map(playlist => (
                                 <Playlist key={ playlist.id } playlist={ playlist } songs={ songs }/>
