@@ -3,9 +3,8 @@ import Head from 'next/head';
 
 import Song from '../src/components/song';
 import Playlists from '../src/components/playlists';
-import PlaylistForm from '../src/components/playlist-form';
 
-import { getAllSongs } from '../src/controllers/songs';
+import { getAllSongs, groupSongsByArtist } from '../src/controllers/songs';
 import { getAllPlaylists } from '../src/controllers/playlists';
 
 export default class IndexPage extends Component {
@@ -14,8 +13,10 @@ export default class IndexPage extends Component {
         const songs = await getAllSongs();
         const playlists = await getAllPlaylists(songs);
         const playlist = playlists.find(p => p.data.id === parseInt(query.playlist));
+        const artists = groupSongsByArtist(songs);
 
         return {
+            artists,
             songs,
             playlists,
             playlist
@@ -27,7 +28,7 @@ export default class IndexPage extends Component {
     }
 
     render () {
-        const { songs, playlists, playlist } = this.props;
+        const { playlists, playlist, artists } = this.props;
 
         return (
             <div className="container">
@@ -46,8 +47,18 @@ export default class IndexPage extends Component {
                         <Playlists playlists={ playlists } playlist={ playlist } />
                     </div>
                     <div className="library__listing library__listing--songs">
-                        { songs.map(song => (
-                            <Song key={ song.id } song={ song } playlist={ playlist } />
+                        { artists.map(artist => (
+                            <div key={ artist.name }>
+                                <h3>{ artist.name }</h3>
+                                { artist.albums.map(album => (
+                                    <div key={ album.name } className="album">
+                                        <h4>{ album.name }</h4>
+                                        { album.songs.map(song => (
+                                            <Song key={ song.id } song={ song } playlist={ playlist } />
+                                        )) }
+                                    </div>
+                                )) }
+                            </div>
                         )) }
                     </div>
                 </div>
